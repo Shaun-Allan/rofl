@@ -1,0 +1,134 @@
+{
+    "operation":{
+        "name": "SRE_Assistant_Policy",
+        "description": "Guardrail to moderate prompts and responses for an SRE assistant, allowing only DevOps and access management topics.",
+        "topicPolicyConfig": {
+          "topicsConfig": [
+            {
+              "name": "Non-DevOps Topics",
+              "definition": "Any topic not related to GitLab, Jira, Confluence, Artifactory, role groups, access management, or other DevOps-related tools and practices.",
+              "examples": [
+                "Tell me a joke",
+                "What's the weather like?",
+                "Write a poem",
+                "Explain quantum physics",
+                "How to cook pasta?",
+                "What is the capital of India?"
+              ],
+              "type": "DENY",
+              "inputAction": "BLOCK",
+              "outputAction": "BLOCK",
+              "inputEnabled": true,
+              "outputEnabled": true
+            }
+          ],
+          "tierConfig": {
+            "tierName": "STANDARD"
+          }
+        },
+        "contentPolicyConfig": {
+          "filtersConfig": [
+            {
+              "type": "SEXUAL",
+              "inputStrength": "HIGH",
+              "outputStrength": "HIGH",
+              "inputAction": "BLOCK",
+              "outputAction": "BLOCK",
+              "inputEnabled": true,
+              "outputEnabled": true
+            },
+            {
+              "type": "VIOLENCE",
+              "inputStrength": "HIGH",
+              "outputStrength": "HIGH",
+              "inputAction": "BLOCK",
+              "outputAction": "BLOCK",
+              "inputEnabled": true,
+              "outputEnabled": true
+            },
+            {
+              "type": "HATE",
+              "inputStrength": "HIGH",
+              "outputStrength": "HIGH",
+              "inputAction": "BLOCK",
+              "outputAction": "BLOCK",
+              "inputEnabled": true,
+              "outputEnabled": true
+            },
+            {
+              "type": "INSULTS",
+              "inputStrength": "HIGH",
+              "outputStrength": "HIGH",
+              "inputAction": "BLOCK",
+              "outputAction": "BLOCK",
+              "inputEnabled": true,
+              "outputEnabled": true
+            },
+            {
+              "type": "MISCONDUCT",
+              "inputStrength": "HIGH",
+              "outputStrength": "HIGH",
+              "inputAction": "BLOCK",
+              "outputAction": "BLOCK",
+              "inputEnabled": true,
+              "outputEnabled": true
+            },
+            {
+              "type": "PROMPT_ATTACK",
+              "inputStrength": "HIGH",
+              "outputStrength": "HIGH",
+              "inputAction": "BLOCK",
+              "outputAction": "BLOCK",
+              "inputEnabled": true,
+              "outputEnabled": true
+            }
+          ],
+          "tierConfig": {
+            "tierName": "STANDARD"
+          }
+        },
+        "wordPolicyConfig": {
+          "wordsConfig": [],
+          "managedWordListsConfig": [
+            {
+              "type": "PROFANITY",
+              "inputAction": "BLOCK",
+              "outputAction": "BLOCK",
+              "inputEnabled": true,
+              "outputEnabled": true
+            }
+          ]
+        },
+        "sensitiveInformationPolicyConfig": {
+          "piiEntitiesConfig": [],
+          "regexesConfig": []
+        },
+        "contextualGroundingPolicyConfig": {
+          "filtersConfig": [
+            {
+              "type": "GROUNDING",
+              "threshold": 0.6
+            },
+            {
+              "type": "RELEVANCE",
+              "threshold": 0.8
+            }
+          ]
+        },
+        "blockedInputMessaging": "This input is not allowed under the SRE Assistant policy.",
+        "blockedOutputsMessaging": "This response has been blocked due to policy restrictions.",
+        "tags": [
+          {
+            "key": "OWNED_BY",
+            "value": "uc603"
+          },
+          {
+            "key": "ENV",
+            "value": "appdev"
+          }
+        ]
+    },
+    "operationInfo": {
+        "action": "CREATE"
+    }
+}

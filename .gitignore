@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environment
+venv/
+venv312/
+venv3120/
+env/
+.venv/
+ENV/
+
+# Environment variables
+# .env
+# .env.*
+
+# Flask specific
+instance/
+*.db
+*.sqlite3
+
+# Pytest
+.cache/
+.pytest_cache/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# LangChain cache or outputs (if any)
+langchain.db
+
+#others
+old_versions/

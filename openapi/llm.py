@@ -1,0 +1,49 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# from llm import get_jwt
+
+def get_jwt(username, password, auth_url):
+    headers = {
+        'Authorization': f'Basic {requests.auth._basic_auth_str(username, password).split(" ")[1]}',
+        'Accept': 'text/plain'
+    }
+    response = requests.post(auth_url, headers=headers)
+    if response.status_code == 200:
+        return response.text.strip()
+    else:
+        raise Exception(f"JWT auth failed: {response.status_code} - {response.text}")
+
+from langchain.llms.base import LLM
+from pydantic import Field
+import requests
+
+
+class CustomOpenAI(LLM):
+    api_url: str = Field(...)
+    jwt_token: str = Field(...)
+
+    def _call(self, prompt: str, **kwargs) -> str:
+        headers = {
+            "Authorization": f"Bearer {self.jwt_token}",
+            "Content-Type": "application/json"
+        }
+        payload = {
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": 0.7
+        }
+        response = requests.post(self.api_url, headers=headers, json=payload)
+        response.raise_for_status()
+        return response.json()["choices"][0]["message"]["content"]
+
+    @property
+    def _llm_type(self) -> str:
+        return "custom-openai"
+    
+    
+def create_openapi_llm(username, password, auth_url, api_url):
+    return CustomOpenAI(
+        api_url=api_url,
+        jwt_token=get_jwt(username, password, auth_url)
+    )
